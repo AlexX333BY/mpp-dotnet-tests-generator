@@ -6,8 +6,8 @@ namespace TestsGenerator
     public class TestsGeneratorConfig
     {
         protected int processThreadCount;
-        protected int readThreadCount;
-        protected int writeThreadCount;
+        protected IParallelReader reader;
+        protected IParallelWriter writer;
         protected IEnumerable<string> readPaths;
         protected string outputDirectoryPath;
 
@@ -24,30 +24,16 @@ namespace TestsGenerator
             }
         }
 
-        public int ReadThreadCount
+        public IParallelReader Reader
         {
-            get => readThreadCount;
-            set
-            {
-                if (value < 1)
-                {
-                    throw new ArgumentException("There should be at least 1 thread");
-                }
-                readThreadCount = value;
-            }
+            get => reader;
+            set => reader = value ?? throw new ArgumentException("Reader shouldn't be null");
         }
 
-        public int WriteThreadCount
+        public IParallelWriter Writer
         {
-            get => writeThreadCount;
-            set
-            {
-                if (value < 1)
-                {
-                    throw new ArgumentException("There should be at least 1 thread");
-                }
-                writeThreadCount = value;
-            }
+            get => writer;
+            set => writer = value ?? throw new ArgumentException("Writer shouldn't be null");
         }
 
         public IEnumerable<string> ReadPaths
@@ -72,8 +58,8 @@ namespace TestsGenerator
         public TestsGeneratorConfig()
         {
             processThreadCount = Environment.ProcessorCount;
-            readThreadCount = 1;
-            writeThreadCount = 1;
+            reader = null;
+            writer = null;
             readPaths = new List<string>();
             outputDirectoryPath = string.Empty;
         }
