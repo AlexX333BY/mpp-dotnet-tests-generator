@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TestsGenerator
+namespace TestsGenerator.DataStructures
 {
     public class TestClassInfo
     {

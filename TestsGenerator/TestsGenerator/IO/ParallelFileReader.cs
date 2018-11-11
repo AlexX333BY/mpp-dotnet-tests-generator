@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace TestsGenerator
+namespace TestsGenerator.IO
 {
-    public class ParallelFileWriter : IParallelWriter
+    public class ParallelFileReader : IParallelReader
     {
+        protected List<string> successfullyReadText;
         protected int threadsCount;
+
+        public IEnumerable<string> SuccessfullyReadText => new List<string>(successfullyReadText);
 
         public int ThreadsCount
         {
@@ -23,29 +26,25 @@ namespace TestsGenerator
             }
         }
 
-        public void WriteText(IDictionary<string, string> pathContentPairs)
+        public IEnumerable<string> ReadText(IEnumerable<string> paths)
         {
+            var result = new ConcurrentBag<string>();
             var exceptions = new ConcurrentBag<Exception>();
             ParallelOptions options = new ParallelOptions
             {
                 MaxDegreeOfParallelism = ThreadsCount
             };
 
-            if (pathContentPairs == null)
+            if (paths == null)
             {
-                throw new ArgumentException("Arguments shouldn't be null");
+                throw new ArgumentException("Paths shouldn't be null");
             }
 
-            Parallel.ForEach(pathContentPairs, options, nameContentPair =>
+            Parallel.ForEach(paths, options, path =>
                 {
                     try
                     {
-                        string directoryName = Path.GetDirectoryName(Path.GetFullPath(nameContentPair.Key));
-                        if (!Directory.Exists(directoryName))
-                        {
-                            Directory.CreateDirectory(directoryName);
-                        }
-                        File.WriteAllText(nameContentPair.Key, nameContentPair.Value);
+                        result.Add(File.ReadAllText(path));
                     }
                     catch (Exception e)
                     {
@@ -53,16 +52,19 @@ namespace TestsGenerator
                     }
                 }
             );
+            successfullyReadText = new List<string>(result);
 
             if (!exceptions.IsEmpty)
             {
                 throw new AggregateException(exceptions);
             }
+            return SuccessfullyReadText;
         }
 
-        public ParallelFileWriter()
+        public ParallelFileReader() 
         {
             threadsCount = 1;
+            successfullyReadText = new List<string>();
         }
     }
 }

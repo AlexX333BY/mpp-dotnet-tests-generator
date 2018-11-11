@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TestsGenerator
+namespace TestsGenerator.DataStructures
 {
     public class TestMethodInfo
     {

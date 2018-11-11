@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TestsGenerator
+namespace TestsGenerator.IO
 {
     public interface IParallelReader
     {

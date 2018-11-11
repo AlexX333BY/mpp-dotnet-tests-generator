@@ -192,15 +192,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IParallelReader.cs" />
-    <Compile Include="IParallelWriter.cs" />
+    <Compile Include="IO\IParallelReader.cs" />
+    <Compile Include="IO\IParallelWriter.cs" />
     <Compile Include="ITestsGenerator.cs" />
-    <Compile Include="TestClassInfo.cs" />
-    <Compile Include="TestMethodInfo.cs" />
-    <Compile Include="ParallelFileReader.cs" />
-    <Compile Include="ParallelFileWriter.cs" />
+    <Compile Include="DataStructures\TestClassInfo.cs" />
+    <Compile Include="DataStructures\TestMethodInfo.cs" />
+    <Compile Include="IO\ParallelFileReader.cs" />
+    <Compile Include="IO\ParallelFileWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestFileInfo.cs" />
+    <Compile Include="DataStructures\TestFileInfo.cs" />
     <Compile Include="TestsGenerator.cs" />
     <Compile Include="TestsGeneratorConfig.cs" />
   </ItemGroup>
