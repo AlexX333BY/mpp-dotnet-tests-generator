@@ -195,9 +195,12 @@
     <Compile Include="IParallelReader.cs" />
     <Compile Include="IParallelWriter.cs" />
     <Compile Include="ITestsGenerator.cs" />
+    <Compile Include="TestClassInfo.cs" />
+    <Compile Include="TestMethodInfo.cs" />
     <Compile Include="ParallelFileReader.cs" />
     <Compile Include="ParallelFileWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestFileInfo.cs" />
     <Compile Include="TestsGenerator.cs" />
     <Compile Include="TestsGeneratorConfig.cs" />
   </ItemGroup>
