@@ -193,7 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IParallelReader.cs" />
+    <Compile Include="IParallelWriter.cs" />
     <Compile Include="ParallelFileReader.cs" />
+    <Compile Include="ParallelFileWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
