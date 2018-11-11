@@ -30,11 +30,16 @@ namespace TestsGenerator
         {
             var result = new ConcurrentDictionary<string, string>();
             var exceptions = new ConcurrentBag<Exception>();
-
             ParallelOptions options = new ParallelOptions
             {
                 MaxDegreeOfParallelism = ThreadsCount
             };
+
+            if (paths == null)
+            {
+                throw new ArgumentException("Paths shouldn't be null");
+            }
+
             Parallel.ForEach(paths, options, path =>
                 {
                     try
