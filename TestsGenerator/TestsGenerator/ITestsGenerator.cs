@@ -2,6 +2,6 @@
 {
     public interface ITestsGenerator
     {
-        void Generate(TestsGeneratorConfig config);
+        void Generate();
     }
 }

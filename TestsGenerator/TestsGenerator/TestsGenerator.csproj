@@ -198,6 +198,7 @@
     <Compile Include="ParallelFileReader.cs" />
     <Compile Include="ParallelFileWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestsGenerator.cs" />
     <Compile Include="TestsGeneratorConfig.cs" />
   </ItemGroup>
   <ItemGroup>
