@@ -8,10 +8,10 @@ namespace TestsGenerator
 {
     public class ParallelFileReader : IParallelReader
     {
-        protected Dictionary<string, string> successfullyReadText;
+        protected List<string> successfullyReadText;
         protected int threadsCount;
 
-        public IDictionary<string, string> SuccessfullyReadText => new Dictionary<string, string>(successfullyReadText);
+        public IEnumerable<string> SuccessfullyReadText => new List<string>(successfullyReadText);
 
         public int ThreadsCount
         {
@@ -26,9 +26,9 @@ namespace TestsGenerator
             }
         }
 
-        public IDictionary<string, string> ReadText(IEnumerable<string> paths)
+        public IEnumerable<string> ReadText(IEnumerable<string> paths)
         {
-            var result = new ConcurrentDictionary<string, string>();
+            var result = new ConcurrentBag<string>();
             var exceptions = new ConcurrentBag<Exception>();
             ParallelOptions options = new ParallelOptions
             {
@@ -44,7 +44,7 @@ namespace TestsGenerator
                 {
                     try
                     {
-                        result[path] = File.ReadAllText(path);
+                        result.Add(File.ReadAllText(path));
                     }
                     catch (Exception e)
                     {
@@ -52,7 +52,7 @@ namespace TestsGenerator
                     }
                 }
             );
-            successfullyReadText = new Dictionary<string, string>(result);
+            successfullyReadText = new List<string>(result);
 
             if (!exceptions.IsEmpty)
             {
@@ -64,7 +64,7 @@ namespace TestsGenerator
         public ParallelFileReader() 
         {
             threadsCount = 1;
-            successfullyReadText = new Dictionary<string, string>();
+            successfullyReadText = new List<string>();
         }
     }
 }

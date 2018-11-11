@@ -8,22 +8,10 @@ namespace TestsGenerator
     {
         protected readonly TestsGeneratorConfig config;
 
-        protected Dictionary<string, string> CreateOutputPaths(string directory, IDictionary<string, string> sourcePaths)
-        {
-            var outputPaths = new Dictionary<string, string>();
-
-            foreach (KeyValuePair<string, string> keyValuePair in sourcePaths)
-            {
-                outputPaths[directory + Path.DirectorySeparatorChar + keyValuePair.Key] = keyValuePair.Value;
-            }
-
-            return outputPaths;
-        }
-
         public void Generate()
         {
             var exceptions = new List<Exception>();
-            IDictionary<string, string> readSource;
+            IEnumerable<string> readSource;
 
             try
             {
@@ -39,7 +27,7 @@ namespace TestsGenerator
 
             try
             {
-                config.Writer.WriteText(CreateOutputPaths(config.OutputDirectoryPath, readSource));
+                //
             }
             catch (Exception e)
             {
