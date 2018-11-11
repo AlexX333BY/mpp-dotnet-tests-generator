@@ -62,7 +62,7 @@ namespace TestsGenerator
 
         public ParallelFileWriter()
         {
-            threadsCount = Environment.ProcessorCount;
+            threadsCount = 1;
         }
     }
 }

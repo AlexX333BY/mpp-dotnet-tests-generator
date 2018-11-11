@@ -63,7 +63,7 @@ namespace TestsGenerator
 
         public ParallelFileReader() 
         {
-            threadsCount = Environment.ProcessorCount;
+            threadsCount = 1;
             successfullyReadText = new Dictionary<string, string>();
         }
     }
