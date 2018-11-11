@@ -7,7 +7,7 @@ namespace TestsGenerator.DataStructures
         public List<string> Usings
         { get; protected set; }
 
-        public List<TestClassInfo> Classes
+        public List<TestTypeInfo> Classes
         { get; protected set; }
     }
 }

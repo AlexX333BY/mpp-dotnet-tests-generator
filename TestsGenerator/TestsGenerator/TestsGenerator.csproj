@@ -192,10 +192,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeAnalysis\CodeAnalyzer.cs" />
+    <Compile Include="CodeAnalysis\ICodeAnalyzer.cs" />
     <Compile Include="IO\IParallelReader.cs" />
     <Compile Include="IO\IParallelWriter.cs" />
     <Compile Include="ITestsGenerator.cs" />
-    <Compile Include="DataStructures\TestClassInfo.cs" />
+    <Compile Include="DataStructures\TestTypeInfo.cs" />
     <Compile Include="DataStructures\TestMethodInfo.cs" />
     <Compile Include="IO\ParallelFileReader.cs" />
     <Compile Include="IO\ParallelFileWriter.cs" />
