@@ -1,2 +1,2 @@
-# mpp-dotnet-tests-generator
-Task #4 of MPP
+# Tests Generator
+[Task #4](https://labs.ishimko.me/mpp-dotnet/4-tests-generator) of MPP
