@@ -8,22 +8,34 @@ namespace TestsGenerator
 {
     public class ParallelFileReader : IParallelReader
     {
-        protected readonly int maxThreadsCount;
-        protected readonly List<string> filePaths;
         protected Dictionary<string, string> successfullyReadText;
+        protected int threadsCount;
 
         public IDictionary<string, string> SuccessfullyReadText => new Dictionary<string, string>(successfullyReadText);
 
-        public void ReadText()
+        public int ThreadsCount
+        {
+            get => threadsCount;
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("There should be at least 1 thread");
+                }
+                threadsCount = value;
+            }
+        }
+
+        public IDictionary<string, string> ReadText(IEnumerable<string> paths)
         {
             var result = new ConcurrentDictionary<string, string>();
             var exceptions = new ConcurrentBag<Exception>();
 
             ParallelOptions options = new ParallelOptions
             {
-                MaxDegreeOfParallelism = maxThreadsCount
+                MaxDegreeOfParallelism = ThreadsCount
             };
-            Parallel.ForEach(filePaths, options, path =>
+            Parallel.ForEach(paths, options, path =>
                 {
                     try
                     {
@@ -41,26 +53,13 @@ namespace TestsGenerator
             {
                 throw new AggregateException(exceptions);
             }
+            return SuccessfullyReadText;
         }
 
-        public ParallelFileReader(IEnumerable<string> paths, int maxThreadsCount)
+        public ParallelFileReader() 
         {
-            if (maxThreadsCount < 1)
-            {
-                throw new ArgumentException("There should be at least 1 thread");
-            }
-            if (paths == null)
-            {
-                throw new ArgumentException("Paths shouldn't be null");
-            }
-
-            this.maxThreadsCount = maxThreadsCount;
-            filePaths = new List<string>(paths);
+            threadsCount = Environment.ProcessorCount;
             successfullyReadText = new Dictionary<string, string>();
         }
-
-        public ParallelFileReader(IEnumerable<string> paths) 
-            : this(paths, Environment.ProcessorCount)
-        { }
     }
 }

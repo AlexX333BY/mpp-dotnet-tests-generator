@@ -4,9 +4,12 @@ namespace TestsGenerator
 {
     public interface IParallelReader
     {
-        void ReadText();
+        IDictionary<string, string> ReadText(IEnumerable<string> paths);
 
         IDictionary<string, string> SuccessfullyReadText
         { get; }
+
+        int ThreadsCount
+        { get; set; }
     }
 }
