@@ -6,11 +6,26 @@ namespace TestsGenerator
 {
     public class TestsGeneratorConfig
     {
+        protected int readThreadCount;
         protected int processThreadCount;
-        protected IParallelReader reader;
-        protected IParallelWriter writer;
+        protected int writeThreadCount;
+        protected IReader reader;
+        protected IWriter writer;
         protected IEnumerable<string> readPaths;
         protected string outputDirectoryPath;
+
+        public int ReadThreadCount
+        {
+            get => readThreadCount;
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("There should be at least 1 thread");
+                }
+                readThreadCount = value;
+            }
+        }
 
         public int ProcessThreadCount
         {
@@ -25,13 +40,26 @@ namespace TestsGenerator
             }
         }
 
-        public IParallelReader Reader
+        public int WriteThreadCount
+        {
+            get => writeThreadCount;
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("There should be at least 1 thread");
+                }
+                writeThreadCount = value;
+            }
+        }
+
+        public IReader Reader
         {
             get => reader;
             set => reader = value ?? throw new ArgumentException("Reader shouldn't be null");
         }
 
-        public IParallelWriter Writer
+        public IWriter Writer
         {
             get => writer;
             set => writer = value ?? throw new ArgumentException("Writer shouldn't be null");

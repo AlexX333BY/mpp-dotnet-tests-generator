@@ -11,32 +11,6 @@ namespace TestsGenerator
         {
             var exceptions = new List<Exception>();
             IEnumerable<string> readSource;
-
-            try
-            {
-                config.Reader.ReadText(config.ReadPaths);
-            }
-            catch (Exception e)
-            {
-                exceptions.Add(e);
-            }
-            readSource = config.Reader.SuccessfullyReadText;
-
-            // TODO: generation
-
-            try
-            {
-                //
-            }
-            catch (Exception e)
-            {
-                exceptions.Add(e);
-            }
-
-            if (exceptions.Count != 0)
-            {
-                throw new AggregateException(exceptions);
-            }
         }
 
         public TestsGenerator(TestsGeneratorConfig config)

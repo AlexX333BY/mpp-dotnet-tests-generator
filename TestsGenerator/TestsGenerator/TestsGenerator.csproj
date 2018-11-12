@@ -194,13 +194,13 @@
   <ItemGroup>
     <Compile Include="CodeAnalysis\CodeAnalyzer.cs" />
     <Compile Include="CodeAnalysis\ICodeAnalyzer.cs" />
-    <Compile Include="IO\IParallelReader.cs" />
-    <Compile Include="IO\IParallelWriter.cs" />
+    <Compile Include="IO\IReader.cs" />
+    <Compile Include="IO\IWriter.cs" />
     <Compile Include="ITestsGenerator.cs" />
     <Compile Include="DataStructures\TestTypeInfo.cs" />
     <Compile Include="DataStructures\TestMethodInfo.cs" />
-    <Compile Include="IO\ParallelFileReader.cs" />
-    <Compile Include="IO\ParallelFileWriter.cs" />
+    <Compile Include="IO\FileReader.cs" />
+    <Compile Include="IO\FileWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataStructures\TestFileInfo.cs" />
     <Compile Include="TestsGenerator.cs" />
