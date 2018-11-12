@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using TestsGenerator.DataStructures;
 
 namespace TestsGenerator
 {
@@ -29,8 +30,8 @@ namespace TestsGenerator
                 MaxDegreeOfParallelism = config.ProcessThreadCount
             };
 
-            var sourceToTestfileTransform = new TransformBlock<string, KeyValuePair<string, string>>((sourceText) => (default(KeyValuePair<string, string>)), processOptions);
-            var writeAction = new ActionBlock<KeyValuePair<string, string>>((pathTextPair) => config.Writer.WriteText(pathTextPair), writeOptions);
+            var sourceToTestfileTransform = new TransformBlock<string, PathContentPair>((sourceText) => (default(PathContentPair)), processOptions);
+            var writeAction = new ActionBlock<PathContentPair>((pathTextPair) => config.Writer.WriteText(pathTextPair), writeOptions);
             var readTransform = new TransformBlock<string, string>((readPath) => config.Reader.ReadText(readPath), readOptions);
 
             readTransform.LinkTo(sourceToTestfileTransform, linkOptions);

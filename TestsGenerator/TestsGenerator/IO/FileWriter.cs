@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using TestsGenerator.DataStructures;
 
 namespace TestsGenerator.IO
 {
@@ -8,13 +8,17 @@ namespace TestsGenerator.IO
     {
         protected string directory;
 
-        public void WriteText(KeyValuePair<string, string> filenameTextPair)
+        public void WriteText(PathContentPair pathContentPair)
         {
+            if (pathContentPair == null)
+            {
+                throw new ArgumentException("PathContent pair shouldn't be null");
+            }
             if (!System.IO.Directory.Exists(directory))
             {
                 System.IO.Directory.CreateDirectory(directory);
             }
-            File.WriteAllText(Directory + Path.DirectorySeparatorChar + filenameTextPair.Key, filenameTextPair.Value);
+            File.WriteAllText(Directory + Path.DirectorySeparatorChar + pathContentPair.Path, pathContentPair.Content);
         }
 
         public string Directory

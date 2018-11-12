@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using TestsGenerator.DataStructures;
 
 namespace TestsGenerator.IO
 {
     public interface IWriter
     {
-        void WriteText(KeyValuePair<string, string> pathTextPair);
+        void WriteText(PathContentPair pathContentPair);
     }
 }

@@ -194,6 +194,7 @@
   <ItemGroup>
     <Compile Include="CodeAnalysis\CodeAnalyzer.cs" />
     <Compile Include="CodeAnalysis\ICodeAnalyzer.cs" />
+    <Compile Include="DataStructures\PathContentPair.cs" />
     <Compile Include="IO\IReader.cs" />
     <Compile Include="IO\IWriter.cs" />
     <Compile Include="ITestsGenerator.cs" />
