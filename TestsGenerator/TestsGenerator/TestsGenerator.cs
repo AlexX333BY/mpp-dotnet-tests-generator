@@ -43,8 +43,6 @@ namespace TestsGenerator
             });
 
             readTransform.Complete();
-            sourceToTestfileTransform.Complete();
-            writeAction.Complete();
         }
 
         public TestsGenerator(TestsGeneratorConfig config)
