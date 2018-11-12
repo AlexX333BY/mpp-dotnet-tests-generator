@@ -29,15 +29,21 @@ namespace TestsGenerator
                 MaxDegreeOfParallelism = config.ProcessThreadCount
             };
 
-            var sourceToTestTransform = new TransformBlock<string, KeyValuePair<string, string>>(new Func<string, KeyValuePair<string, string>>(null), processOptions);
+            var sourceToTestfileTransform = new TransformBlock<string, KeyValuePair<string, string>>((sourceText) => (default(KeyValuePair<string, string>)), processOptions);
             var writeAction = new ActionBlock<KeyValuePair<string, string>>((pathTextPair) => config.Writer.WriteText(pathTextPair), writeOptions);
+            var readTransform = new TransformBlock<string, string>((readPath) => config.Reader.ReadText(readPath), readOptions);
 
-            sourceToTestTransform.LinkTo(writeAction, linkOptions);
+            readTransform.LinkTo(sourceToTestfileTransform, linkOptions);
+            sourceToTestfileTransform.LinkTo(writeAction, linkOptions);
 
-            Parallel.ForEach(config.ReadPaths, (readPath) =>
+            Parallel.ForEach(config.ReadPaths, async (readPath) =>
             {
-                // read and send to transform
+                await readTransform.SendAsync(readPath);
             });
+
+            readTransform.Complete();
+            sourceToTestfileTransform.Complete();
+            writeAction.Complete();
         }
 
         public TestsGenerator(TestsGeneratorConfig config)
