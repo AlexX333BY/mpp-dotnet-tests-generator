@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Threading.Tasks.Dataflow;
 
 namespace TestsGenerator
 {
@@ -10,7 +12,32 @@ namespace TestsGenerator
         public void Generate()
         {
             var exceptions = new List<Exception>();
-            IEnumerable<string> readSource;
+            DataflowLinkOptions linkOptions = new DataflowLinkOptions
+            {
+                PropagateCompletion = true
+            };
+            ExecutionDataflowBlockOptions readOptions = new ExecutionDataflowBlockOptions
+            {
+                MaxDegreeOfParallelism = config.ReadThreadCount
+            };
+            ExecutionDataflowBlockOptions writeOptions = new ExecutionDataflowBlockOptions
+            {
+                MaxDegreeOfParallelism = config.WriteThreadCount
+            };
+            ExecutionDataflowBlockOptions processOptions = new ExecutionDataflowBlockOptions
+            {
+                MaxDegreeOfParallelism = config.ProcessThreadCount
+            };
+
+            var sourceToTestTransform = new TransformBlock<string, KeyValuePair<string, string>>(new Func<string, KeyValuePair<string, string>>(null), processOptions);
+            var writeAction = new ActionBlock<KeyValuePair<string, string>>((pathTextPair) => config.Writer.WriteText(pathTextPair), writeOptions);
+
+            sourceToTestTransform.LinkTo(writeAction, linkOptions);
+
+            Parallel.ForEach(config.ReadPaths, (readPath) =>
+            {
+                // read and send to transform
+            });
         }
 
         public TestsGenerator(TestsGeneratorConfig config)

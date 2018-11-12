@@ -1,7 +1,9 @@
-﻿namespace TestsGenerator.IO
+﻿using System.Collections.Generic;
+
+namespace TestsGenerator.IO
 {
     public interface IWriter
     {
-        void WriteText(string path, string text);
+        void WriteText(KeyValuePair<string, string> pathTextPair);
     }
 }
