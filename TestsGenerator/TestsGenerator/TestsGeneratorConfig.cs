@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using TestsGenerator.CodeAnalysis;
 using TestsGenerator.IO;
+using TestsGenerator.TemplateGenerators;
 
 namespace TestsGenerator
 {
@@ -13,6 +15,7 @@ namespace TestsGenerator
         protected IWriter writer;
         protected IEnumerable<string> readPaths;
         protected string outputDirectoryPath;
+        protected ITemplateGenerator templateGenerator;
 
         public int ReadThreadCount
         {
@@ -84,13 +87,20 @@ namespace TestsGenerator
             set => outputDirectoryPath = value ?? throw new ArgumentException("Path shouldn't be null");
         }
 
+        public ITemplateGenerator TemplateGenerator
+        {
+            get => templateGenerator;
+            set => templateGenerator = value ?? throw new ArgumentException("Template generator shouldn't be null");
+        }
+
         public TestsGeneratorConfig()
         {
             processThreadCount = Environment.ProcessorCount;
-            reader = null;
-            writer = null;
+            reader = new FileReader();
+            writer = new FileWriter();
             readPaths = new List<string>();
             outputDirectoryPath = string.Empty;
+            templateGenerator = new TemplateGenerator(new CodeAnalyzer());
         }
     }
 }
