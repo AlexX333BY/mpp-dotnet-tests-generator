@@ -7,11 +7,13 @@ namespace TestsGenerator.DataStructures
         public string Typename
         { get; protected set; }
 
-        public bool IsInterface => Typename.StartsWith("I");
+        public bool IsInterface
+        { get; protected set; }
 
         public TypeInfo(string typename)
         {
             Typename = typename ?? throw new ArgumentException("Typename shouldn't be null");
+            IsInterface = typename.StartsWith("I");
         }
     }
 }

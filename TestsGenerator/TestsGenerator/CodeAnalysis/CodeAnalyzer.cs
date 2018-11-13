@@ -28,11 +28,12 @@ namespace TestsGenerator.CodeAnalysis
 
         protected TestClassInfo CreateClassInfo(ClassDeclarationSyntax classDeclaration)
         {
-            TestClassInfo typeInfo = new TestClassInfo(classDeclaration.Identifier.ValueText, ((NamespaceDeclarationSyntax)classDeclaration.Parent).Name.ToString());
+            TestClassInfo typeInfo = new TestClassInfo(classDeclaration.Identifier.ValueText, ((NamespaceDeclarationSyntax)classDeclaration.Parent).Name.ToString(), 
+                GetMaxedConstructor(classDeclaration));
 
             foreach (MethodDeclarationSyntax methodDeclaration in classDeclaration.DescendantNodes()
                 .OfType<MethodDeclarationSyntax>()
-                .Where(methodDeclaration => methodDeclaration.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PublicKeyword))))
+                .Where((methodDeclaration) => methodDeclaration.Modifiers.Any((modifier) => modifier.IsKind(SyntaxKind.PublicKeyword))))
             {
                 typeInfo.Methods.Add(CreateMethodInfo(methodDeclaration));
             }
@@ -42,14 +43,33 @@ namespace TestsGenerator.CodeAnalysis
 
         protected TestMethodInfo CreateMethodInfo(MethodDeclarationSyntax methodDeclaration)
         {
-            return new TestMethodInfo(methodDeclaration.Identifier.ValueText, new DataStructures.TypeInfo(methodDeclaration.ReturnType.ToString()));
+            TestMethodInfo result = new TestMethodInfo(methodDeclaration.Identifier.ValueText, new DataStructures.TypeInfo(methodDeclaration.ReturnType.ToString()));
+
+            foreach (ParameterSyntax parameter in methodDeclaration.ParameterList.Parameters)
+            {
+                result.Arguments.Add(new DataStructures.TypeInfo(parameter.Type.ToString()));
+            }
+            return result;
         }
 
         protected ConstructorInfo GetMaxedConstructor(ClassDeclarationSyntax classDeclaration)
         {
-            // TODO
+            ConstructorInfo result = new ConstructorInfo();
+            ConstructorDeclarationSyntax maxedConstructorDeclaration = classDeclaration.DescendantNodes()
+                .OfType<ConstructorDeclarationSyntax>()
+                .Where((constructor) => constructor.Modifiers.Any((modifier) => modifier.IsKind(SyntaxKind.PublicKeyword)))
+                .OrderByDescending((constructor) => constructor.ParameterList.Parameters.Count)
+                .FirstOrDefault();
 
-            return null;
+            if (maxedConstructorDeclaration != null)
+            {
+                foreach (ParameterSyntax parameter in maxedConstructorDeclaration.ParameterList.Parameters)
+                {
+                    result.Arguments.Add(new DataStructures.TypeInfo(parameter.Type.ToString()));
+                }
+            }
+
+            return result;
         }
     }
 }

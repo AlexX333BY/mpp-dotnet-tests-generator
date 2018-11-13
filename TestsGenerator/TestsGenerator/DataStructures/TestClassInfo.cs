@@ -27,6 +27,7 @@ namespace TestsGenerator.DataStructures
             Name = name;
             Namespace = @namespace;
             Methods = new List<TestMethodInfo>();
+            Constructor = constructorInfo;
         }
     }
 }
