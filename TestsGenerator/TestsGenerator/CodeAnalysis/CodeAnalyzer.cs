@@ -32,7 +32,7 @@ namespace TestsGenerator.CodeAnalysis
 
             foreach (MethodDeclarationSyntax methodDeclaration in classDeclaration.DescendantNodes()
                 .OfType<MethodDeclarationSyntax>()
-                .Where(methodDeclaration => methodDeclaration.Modifiers.Any(modifier => modifier.ValueText == "public")))
+                .Where(methodDeclaration => methodDeclaration.Modifiers.Any(modifier => modifier.Kind() == SyntaxKind.PublicKeyword)))
             {
                 typeInfo.Methods.Add(CreateMethodInfo(methodDeclaration));
             }
