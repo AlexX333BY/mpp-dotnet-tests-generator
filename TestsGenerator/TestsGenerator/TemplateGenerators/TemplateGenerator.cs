@@ -25,6 +25,7 @@ namespace TestsGenerator.TemplateGenerators
             
             TestFileInfo fileInfo = codeAnalyzer.Analyze(source);
             List<UsingDirectiveSyntax> commonUsings = fileInfo.Usings.Select((usingStr) => UsingDirective(IdentifierName(usingStr))).ToList();
+            commonUsings.Add(UsingDirective(IdentifierName("Microsoft.VisualStudio.TestTools.UnitTesting")));  
 
             foreach (TestTypeInfo typeInfo in fileInfo.Classes)
             {
