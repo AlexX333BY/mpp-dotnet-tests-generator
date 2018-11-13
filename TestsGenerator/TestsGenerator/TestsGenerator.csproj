@@ -196,6 +196,7 @@
     <Compile Include="CodeAnalysis\CodeAnalyzer.cs" />
     <Compile Include="CodeAnalysis\ICodeAnalyzer.cs" />
     <Compile Include="DataStructures\ConstructorInfo.cs" />
+    <Compile Include="DataStructures\ParameterInfo.cs" />
     <Compile Include="DataStructures\TypeInfo.cs" />
     <Compile Include="DataStructures\PathContentPair.cs" />
     <Compile Include="IO\IReader.cs" />
