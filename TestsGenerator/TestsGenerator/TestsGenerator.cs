@@ -30,9 +30,9 @@ namespace TestsGenerator
                 MaxDegreeOfParallelism = config.ProcessThreadCount
             };
 
-            var sourceToTestfileTransform = new TransformBlock<string, PathContentPair>((sourceText) => (default(PathContentPair)), processOptions);
-            var writeAction = new ActionBlock<PathContentPair>((pathTextPair) => config.Writer.WriteText(pathTextPair), writeOptions);
             var readTransform = new TransformBlock<string, string>((readPath) => config.Reader.ReadText(readPath), readOptions);
+            var sourceToTestfileTransform = new TransformManyBlock<string, PathContentPair>((sourceText) => config.TemplateGenerator.Generate(sourceText), processOptions);
+            var writeAction = new ActionBlock<PathContentPair>((pathTextPair) => config.Writer.WriteText(pathTextPair), writeOptions);
 
             readTransform.LinkTo(sourceToTestfileTransform, linkOptions);
             sourceToTestfileTransform.LinkTo(writeAction, linkOptions);
@@ -43,6 +43,7 @@ namespace TestsGenerator
             });
 
             readTransform.Complete();
+            writeAction.Completion.Wait();
         }
 
         public TestsGenerator(TestsGeneratorConfig config)
