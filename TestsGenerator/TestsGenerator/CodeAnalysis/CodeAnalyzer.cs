@@ -47,7 +47,7 @@ namespace TestsGenerator.CodeAnalysis
 
             foreach (ParameterSyntax parameter in methodDeclaration.ParameterList.Parameters)
             {
-                result.Arguments.Add(new DataStructures.TypeInfo(parameter.Type.ToString()));
+                result.Parameters.Add(new ParameterInfo(parameter.Identifier.ValueText, new DataStructures.TypeInfo(parameter.Type.ToString())));
             }
             return result;
         }
@@ -65,7 +65,7 @@ namespace TestsGenerator.CodeAnalysis
             {
                 foreach (ParameterSyntax parameter in maxedConstructorDeclaration.ParameterList.Parameters)
                 {
-                    result.Arguments.Add(new DataStructures.TypeInfo(parameter.Type.ToString()));
+                    result.Parameters.Add(new ParameterInfo(parameter.Identifier.ValueText, new DataStructures.TypeInfo(parameter.Type.ToString())));
                 }
             }
 

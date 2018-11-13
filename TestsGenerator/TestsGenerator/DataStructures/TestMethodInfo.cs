@@ -8,7 +8,7 @@ namespace TestsGenerator.DataStructures
         public string Name
         { get; protected set; }
 
-        public List<TypeInfo> Arguments
+        public List<ParameterInfo> Parameters
         { get; protected set; }
 
         public TypeInfo ReturnType
@@ -23,7 +23,7 @@ namespace TestsGenerator.DataStructures
 
             Name = name;
             ReturnType = returnType;
-            Arguments = new List<TypeInfo>();
+            Parameters = new List<ParameterInfo>();
         }
     }
 }

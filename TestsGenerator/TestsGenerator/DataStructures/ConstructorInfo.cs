@@ -4,12 +4,12 @@ namespace TestsGenerator.DataStructures
 {
     public class ConstructorInfo
     {
-        public List<TypeInfo> Arguments
+        public List<ParameterInfo> Parameters
         { get; protected set; }
 
         public ConstructorInfo()
         {
-            Arguments = new List<TypeInfo>();
+            Parameters = new List<ParameterInfo>();
         }
     }
 }
