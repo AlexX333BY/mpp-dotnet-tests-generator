@@ -195,11 +195,13 @@
   <ItemGroup>
     <Compile Include="CodeAnalysis\CodeAnalyzer.cs" />
     <Compile Include="CodeAnalysis\ICodeAnalyzer.cs" />
+    <Compile Include="DataStructures\ConstructorInfo.cs" />
+    <Compile Include="DataStructures\TypeInfo.cs" />
     <Compile Include="DataStructures\PathContentPair.cs" />
     <Compile Include="IO\IReader.cs" />
     <Compile Include="IO\IWriter.cs" />
     <Compile Include="ITestsGenerator.cs" />
-    <Compile Include="DataStructures\TestTypeInfo.cs" />
+    <Compile Include="DataStructures\TestClassInfo.cs" />
     <Compile Include="DataStructures\TestMethodInfo.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\FileWriter.cs" />

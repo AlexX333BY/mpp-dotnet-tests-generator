@@ -26,13 +26,13 @@ namespace TestsGenerator.CodeAnalysis
             return testFileInfo;
         }
 
-        protected TestTypeInfo CreateClassInfo(ClassDeclarationSyntax classDeclaration)
+        protected TestClassInfo CreateClassInfo(ClassDeclarationSyntax classDeclaration)
         {
-            TestTypeInfo typeInfo = new TestTypeInfo(classDeclaration.Identifier.ValueText, ((NamespaceDeclarationSyntax)classDeclaration.Parent).Name.ToString());
+            TestClassInfo typeInfo = new TestClassInfo(classDeclaration.Identifier.ValueText, ((NamespaceDeclarationSyntax)classDeclaration.Parent).Name.ToString());
 
             foreach (MethodDeclarationSyntax methodDeclaration in classDeclaration.DescendantNodes()
                 .OfType<MethodDeclarationSyntax>()
-                .Where(methodDeclaration => methodDeclaration.Modifiers.Any(modifier => modifier.Kind() == SyntaxKind.PublicKeyword)))
+                .Where(methodDeclaration => methodDeclaration.Modifiers.Any(modifier => modifier.IsKind(SyntaxKind.PublicKeyword))))
             {
                 typeInfo.Methods.Add(CreateMethodInfo(methodDeclaration));
             }
@@ -42,7 +42,14 @@ namespace TestsGenerator.CodeAnalysis
 
         protected TestMethodInfo CreateMethodInfo(MethodDeclarationSyntax methodDeclaration)
         {
-            return new TestMethodInfo(methodDeclaration.Identifier.ValueText);
+            return new TestMethodInfo(methodDeclaration.Identifier.ValueText, new DataStructures.TypeInfo(methodDeclaration.ReturnType.ToString()));
+        }
+
+        protected ConstructorInfo GetMaxedConstructor(ClassDeclarationSyntax classDeclaration)
+        {
+            // TODO
+
+            return null;
         }
     }
 }

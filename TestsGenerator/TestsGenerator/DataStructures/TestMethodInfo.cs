@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TestsGenerator.DataStructures
 {
@@ -7,9 +8,22 @@ namespace TestsGenerator.DataStructures
         public string Name
         { get; protected set; }
 
-        public TestMethodInfo(string name)
+        public List<TypeInfo> Arguments
+        { get; protected set; }
+
+        public TypeInfo ReturnType
+        { get; protected set; }
+
+        public TestMethodInfo(string name, TypeInfo returnType)
         {
-            Name = name ?? throw new ArgumentException("Name shouldn't be null");
+            if ((name == null) || (returnType == null))
+            {
+                throw new ArgumentException("Arguments shouldn't be null");
+            }
+
+            Name = name;
+            ReturnType = returnType;
+            Arguments = new List<TypeInfo>();
         }
     }
 }

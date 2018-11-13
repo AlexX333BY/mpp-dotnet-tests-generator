@@ -7,13 +7,13 @@ namespace TestsGenerator.DataStructures
         public List<string> Usings
         { get; protected set; }
 
-        public List<TestTypeInfo> Classes
+        public List<TestClassInfo> Classes
         { get; protected set; }
 
         public TestFileInfo()
         {
             Usings = new List<string>();
-            Classes = new List<TestTypeInfo>();
+            Classes = new List<TestClassInfo>();
         }
     }
 }

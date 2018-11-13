@@ -26,7 +26,7 @@ namespace TestsGenerator.TemplateGenerators
             TestFileInfo fileInfo = codeAnalyzer.Analyze(source);
             List<UsingDirectiveSyntax> commonUsings = fileInfo.Usings.Select((usingStr) => UsingDirective(IdentifierName(usingStr))).ToList();
 
-            foreach (TestTypeInfo typeInfo in fileInfo.Classes)
+            foreach (TestClassInfo typeInfo in fileInfo.Classes)
             {
                 resultList.Add(new PathContentPair(typeInfo.Name + "Test.cs", CompilationUnit()
                     .WithUsings(
@@ -41,7 +41,7 @@ namespace TestsGenerator.TemplateGenerators
             return resultList;
         }
 
-        protected UsingDirectiveSyntax[] CreateClassUsings(TestTypeInfo typeInfo, List<UsingDirectiveSyntax> fileUsings)
+        protected UsingDirectiveSyntax[] CreateClassUsings(TestClassInfo typeInfo, List<UsingDirectiveSyntax> fileUsings)
         {
             return new List<UsingDirectiveSyntax>(fileUsings)
             {
@@ -49,7 +49,7 @@ namespace TestsGenerator.TemplateGenerators
             }.ToArray();
         }
 
-        protected MemberDeclarationSyntax CreateClassWithNamespaceDeclaration(TestTypeInfo typeInfo)
+        protected MemberDeclarationSyntax CreateClassWithNamespaceDeclaration(TestClassInfo typeInfo)
         {
             return NamespaceDeclaration(
                 IdentifierName(typeInfo.Namespace + ".Test"))
@@ -58,7 +58,7 @@ namespace TestsGenerator.TemplateGenerators
                     CreateClassDeclaration(typeInfo)));
         }
 
-        protected ClassDeclarationSyntax CreateClassDeclaration(TestTypeInfo typeInfo)
+        protected ClassDeclarationSyntax CreateClassDeclaration(TestClassInfo typeInfo)
         {
             return ClassDeclaration(typeInfo.Name + "Test")
             .WithAttributeLists(
