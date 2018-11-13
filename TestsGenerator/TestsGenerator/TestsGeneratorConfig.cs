@@ -14,7 +14,6 @@ namespace TestsGenerator
         protected IReader reader;
         protected IWriter writer;
         protected IEnumerable<string> readPaths;
-        protected string outputDirectoryPath;
         protected ITemplateGenerator templateGenerator;
 
         public int ReadThreadCount
@@ -81,12 +80,6 @@ namespace TestsGenerator
             }
         }
 
-        public string OutputDirectoryPath
-        {
-            get => outputDirectoryPath;
-            set => outputDirectoryPath = value ?? throw new ArgumentException("Path shouldn't be null");
-        }
-
         public ITemplateGenerator TemplateGenerator
         {
             get => templateGenerator;
@@ -95,11 +88,12 @@ namespace TestsGenerator
 
         public TestsGeneratorConfig()
         {
+            readThreadCount = 1;
+            writeThreadCount = 1;
             processThreadCount = Environment.ProcessorCount;
             reader = new FileReader();
             writer = new FileWriter();
             readPaths = new List<string>();
-            outputDirectoryPath = string.Empty;
             templateGenerator = new TemplateGenerator(new CodeAnalyzer());
         }
     }
