@@ -36,7 +36,7 @@ namespace TestsGenerator.IO
 
         public FileWriter()
         {
-            directory = string.Empty;
+            Directory = System.IO.Directory.GetCurrentDirectory();
         }
     }
 }

@@ -9,5 +9,11 @@ namespace TestsGenerator.DataStructures
 
         public List<TestTypeInfo> Classes
         { get; protected set; }
+
+        public TestFileInfo()
+        {
+            Usings = new List<string>();
+            Classes = new List<TestTypeInfo>();
+        }
     }
 }
