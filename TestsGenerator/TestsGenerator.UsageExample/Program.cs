@@ -12,8 +12,8 @@ namespace TestsGenerator.UsageExample
             {
                 ReadPaths = new List<string>
                 {
-                    "HelloWorld.cs",
-                    "CRefTest.cs"
+                    "../../SimpleTestFile.cs",
+                    "../../ExtendedTestFile.cs"
                 },
                 Writer = new FileWriter()
                 {
