@@ -42,6 +42,7 @@ namespace TestsGenerator.UnitTests
         [TestMethod]
         public void UsingTests()
         {
+            Assert.IsTrue(class1Root.Usings.Any((usingEntry) => usingEntry.Name.ToString() == "Microsoft.VisualStudio.TestTools.UnitTesting"));
             Assert.IsTrue(class1Root.Usings.Any((usingEntry) => usingEntry.Name.ToString() == "Moq"));
             Assert.IsTrue(class1Root.Usings.Any((usingEntry) => usingEntry.Name.ToString() == "System"));
             Assert.IsTrue(class1Root.Usings.Any((usingEntry) => usingEntry.Name.ToString() == "TestClassNamespace.Class1"));
