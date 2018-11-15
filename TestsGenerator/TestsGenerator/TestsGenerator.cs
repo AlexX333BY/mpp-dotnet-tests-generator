@@ -12,7 +12,6 @@ namespace TestsGenerator
 
         public void Generate()
         {
-            var exceptions = new List<Exception>();
             DataflowLinkOptions linkOptions = new DataflowLinkOptions
             {
                 PropagateCompletion = true
