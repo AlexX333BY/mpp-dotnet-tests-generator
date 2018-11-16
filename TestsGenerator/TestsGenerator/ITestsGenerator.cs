@@ -5,6 +5,6 @@ namespace TestsGenerator
     public interface ITestsGenerator
     {
         void Generate();
-        Task GenerateAsync();
+        Task GetGenerateTask();
     }
 }

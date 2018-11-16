@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 using TestsGenerator.DataStructures;
@@ -42,7 +41,7 @@ namespace TestsGenerator
             writeAction.Completion.Wait();
         }
 
-        public Task GenerateAsync()
+        public Task GetGenerateTask()
         {
             return new Task(() => Generate());
         }
