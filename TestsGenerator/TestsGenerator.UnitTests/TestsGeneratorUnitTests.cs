@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,7 +35,9 @@ namespace TestsGenerator.UnitTests
                 }
             };
 
-            new TestsGenerator(config).Generate();
+            Task generationTask = new TestsGenerator(config).GetGenerateTask();
+            generationTask.Start();
+            generationTask.Wait();
 
             class1Root = CSharpSyntaxTree.ParseText(File.ReadAllText(testClass1FilePath)).GetCompilationUnitRoot();
             class2Root = CSharpSyntaxTree.ParseText(File.ReadAllText(testClass2FilePath)).GetCompilationUnitRoot();
@@ -51,9 +54,10 @@ namespace TestsGenerator.UnitTests
                 }
             };
 
-            ITestsGenerator generator = new TestsGenerator(config);
+            Task generationTask = new TestsGenerator(config).GetGenerateTask();
+            generationTask.Start();
 
-            Assert.ThrowsException<AggregateException>(() => generator.Generate());
+            Assert.ThrowsException<AggregateException>(() => generationTask.Wait());
         }
 
         [TestMethod]
