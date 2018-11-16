@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TestsGenerator.IO;
 
 namespace TestsGenerator.UsageExample
@@ -23,7 +24,11 @@ namespace TestsGenerator.UsageExample
                 WriteThreadCount = 2
             };
 
-            new TestsGenerator(config).Generate();
+            Task generationTask = new TestsGenerator(config).GenerateAsync();
+            generationTask.Start();
+            generationTask.Wait();
+            Console.WriteLine("Generation completed");
+            Console.ReadKey();
         }
     }
 }
