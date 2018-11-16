@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp;
@@ -37,6 +38,22 @@ namespace TestsGenerator.UnitTests
 
             class1Root = CSharpSyntaxTree.ParseText(File.ReadAllText(testClass1FilePath)).GetCompilationUnitRoot();
             class2Root = CSharpSyntaxTree.ParseText(File.ReadAllText(testClass2FilePath)).GetCompilationUnitRoot();
+        }
+
+        [TestMethod]
+        public void ExceptionThrowingTest()
+        {
+            TestsGeneratorConfig config = new TestsGeneratorConfig
+            {
+                ReadPaths = new List<string>
+                {
+                    "NonExistingFile.cs"
+                }
+            };
+
+            ITestsGenerator generator = new TestsGenerator(config);
+
+            Assert.ThrowsException<AggregateException>(() => generator.Generate());
         }
 
         [TestMethod]
