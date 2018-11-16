@@ -35,7 +35,10 @@ namespace TestsGenerator
             readTransform.LinkTo(sourceToTestfileTransform, linkOptions);
             sourceToTestfileTransform.LinkTo(writeAction, linkOptions);
 
-            Parallel.ForEach(config.ReadPaths, (readPath) => readTransform.SendAsync(readPath));
+            foreach (string readPath in config.ReadPaths)
+            {
+                readTransform.SendAsync(readPath);
+            }
 
             readTransform.Complete();
             return writeAction.Completion;
