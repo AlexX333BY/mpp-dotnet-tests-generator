@@ -13,10 +13,10 @@ namespace TestsGenerator.IO
                 throw new ArgumentException("Path shouldn't be null");
             }
 
-            StreamReader reader = new StreamReader(path);
-            string result = await reader.ReadToEndAsync();
-            reader.Close();
-            return result;
+            using (StreamReader reader = new StreamReader(path))
+            {
+                return await reader.ReadToEndAsync();
+            }
         }
     }
 }

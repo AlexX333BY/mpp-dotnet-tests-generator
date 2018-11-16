@@ -20,9 +20,10 @@ namespace TestsGenerator.IO
                 System.IO.Directory.CreateDirectory(directory);
             }
 
-            StreamWriter writer = new StreamWriter(Directory + Path.DirectorySeparatorChar + pathContentPair.Path);
-            await writer.WriteAsync(pathContentPair.Content);
-            writer.Close();
+            using (StreamWriter writer = new StreamWriter(Directory + Path.DirectorySeparatorChar + pathContentPair.Path))
+            {
+                await writer.WriteAsync(pathContentPair.Content);
+            }
         }
 
         public string Directory
