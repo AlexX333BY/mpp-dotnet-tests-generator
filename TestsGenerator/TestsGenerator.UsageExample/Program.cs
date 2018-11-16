@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using TestsGenerator.IO;
 
 namespace TestsGenerator.UsageExample
@@ -16,7 +15,7 @@ namespace TestsGenerator.UsageExample
                     "../../SimpleTestFile.cs",
                     "../../ExtendedTestFile.cs"
                 },
-                Writer = new FileWriter()
+                Writer = new AsyncFileWriter()
                 {
                     Directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
                 },

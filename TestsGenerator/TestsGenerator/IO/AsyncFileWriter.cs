@@ -1,14 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using TestsGenerator.DataStructures;
 
 namespace TestsGenerator.IO
 {
-    public class FileWriter : IWriter
+    public class AsyncFileWriter : IAsyncWriter
     {
         protected string directory;
 
-        public void WriteText(PathContentPair pathContentPair)
+        public async Task WriteTextAsync(PathContentPair pathContentPair)
         {
             if (pathContentPair == null)
             {
@@ -18,7 +19,10 @@ namespace TestsGenerator.IO
             {
                 System.IO.Directory.CreateDirectory(directory);
             }
-            File.WriteAllText(Directory + Path.DirectorySeparatorChar + pathContentPair.Path, pathContentPair.Content);
+
+            StreamWriter writer = new StreamWriter(Directory + Path.DirectorySeparatorChar + pathContentPair.Path);
+            await writer.WriteAsync(pathContentPair.Content);
+            writer.Close();
         }
 
         public string Directory
@@ -34,7 +38,7 @@ namespace TestsGenerator.IO
             }
         }
 
-        public FileWriter()
+        public AsyncFileWriter()
         {
             Directory = System.IO.Directory.GetCurrentDirectory();
         }

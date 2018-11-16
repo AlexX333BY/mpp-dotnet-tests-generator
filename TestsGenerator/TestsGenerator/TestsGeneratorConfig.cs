@@ -11,8 +11,8 @@ namespace TestsGenerator
         protected int readThreadCount;
         protected int processThreadCount;
         protected int writeThreadCount;
-        protected IReader reader;
-        protected IWriter writer;
+        protected IAsyncReader reader;
+        protected IAsyncWriter writer;
         protected IEnumerable<string> readPaths;
         protected ITemplateGenerator templateGenerator;
 
@@ -55,13 +55,13 @@ namespace TestsGenerator
             }
         }
 
-        public IReader Reader
+        public IAsyncReader Reader
         {
             get => reader;
             set => reader = value ?? throw new ArgumentException("Reader shouldn't be null");
         }
 
-        public IWriter Writer
+        public IAsyncWriter Writer
         {
             get => writer;
             set => writer = value ?? throw new ArgumentException("Writer shouldn't be null");
@@ -91,8 +91,8 @@ namespace TestsGenerator
             readThreadCount = 1;
             writeThreadCount = 1;
             processThreadCount = Environment.ProcessorCount;
-            reader = new FileReader();
-            writer = new FileWriter();
+            reader = new AsyncFileReader();
+            writer = new AsyncFileWriter();
             readPaths = new List<string>();
             templateGenerator = new TemplateGenerator(new CodeAnalyzer());
         }

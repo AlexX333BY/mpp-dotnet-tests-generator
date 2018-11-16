@@ -199,13 +199,13 @@
     <Compile Include="DataStructures\ParameterInfo.cs" />
     <Compile Include="DataStructures\TypeInfo.cs" />
     <Compile Include="DataStructures\PathContentPair.cs" />
-    <Compile Include="IO\IReader.cs" />
-    <Compile Include="IO\IWriter.cs" />
+    <Compile Include="IO\IAsyncReader.cs" />
+    <Compile Include="IO\IAsyncWriter.cs" />
     <Compile Include="ITestsGenerator.cs" />
     <Compile Include="DataStructures\TestClassInfo.cs" />
     <Compile Include="DataStructures\TestMethodInfo.cs" />
-    <Compile Include="IO\FileReader.cs" />
-    <Compile Include="IO\FileWriter.cs" />
+    <Compile Include="IO\AsyncFileReader.cs" />
+    <Compile Include="IO\AsyncFileWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataStructures\TestFileInfo.cs" />
     <Compile Include="TemplateGenerators\ITemplateGenerator.cs" />

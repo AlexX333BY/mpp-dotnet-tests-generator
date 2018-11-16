@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -29,7 +28,7 @@ namespace TestsGenerator.UnitTests
                 {
                     testFilePath
                 },
-                Writer = new FileWriter()
+                Writer = new AsyncFileWriter()
                 {
                     Directory = testFilesDirectory
                 }
