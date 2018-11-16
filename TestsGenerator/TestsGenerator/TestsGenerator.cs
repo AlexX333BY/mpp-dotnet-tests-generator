@@ -42,6 +42,11 @@ namespace TestsGenerator
             writeAction.Completion.Wait();
         }
 
+        public Task GenerateAsync()
+        {
+            return new Task(() => Generate());
+        }
+
         public TestsGenerator(TestsGeneratorConfig config)
         {
             this.config = config ?? throw new ArgumentException("Config shouldn't be null");
