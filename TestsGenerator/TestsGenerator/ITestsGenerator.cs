@@ -4,7 +4,6 @@ namespace TestsGenerator
 {
     public interface ITestsGenerator
     {
-        void Generate();
-        Task GetGenerateTask();
+        Task Generate();
     }
 }

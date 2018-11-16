@@ -35,9 +35,7 @@ namespace TestsGenerator.UnitTests
                 }
             };
 
-            Task generationTask = new TestsGenerator(config).GetGenerateTask();
-            generationTask.Start();
-            generationTask.Wait();
+            new TestsGenerator(config).Generate().Wait();
 
             class1Root = CSharpSyntaxTree.ParseText(File.ReadAllText(testClass1FilePath)).GetCompilationUnitRoot();
             class2Root = CSharpSyntaxTree.ParseText(File.ReadAllText(testClass2FilePath)).GetCompilationUnitRoot();
@@ -54,10 +52,7 @@ namespace TestsGenerator.UnitTests
                 }
             };
 
-            Task generationTask = new TestsGenerator(config).GetGenerateTask();
-            generationTask.Start();
-
-            Assert.ThrowsException<AggregateException>(() => generationTask.Wait());
+            Assert.ThrowsException<AggregateException>(() => new TestsGenerator(config).Generate().Wait());
         }
 
         [TestMethod]

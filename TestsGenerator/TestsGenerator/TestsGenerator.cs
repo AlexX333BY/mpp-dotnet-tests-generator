@@ -9,7 +9,7 @@ namespace TestsGenerator
     {
         protected readonly TestsGeneratorConfig config;
 
-        public void Generate()
+        public Task Generate()
         {
             DataflowLinkOptions linkOptions = new DataflowLinkOptions
             {
@@ -38,12 +38,7 @@ namespace TestsGenerator
             Parallel.ForEach(config.ReadPaths, (readPath) => readTransform.SendAsync(readPath));
 
             readTransform.Complete();
-            writeAction.Completion.Wait();
-        }
-
-        public Task GetGenerateTask()
-        {
-            return new Task(() => Generate());
+            return writeAction.Completion;
         }
 
         public TestsGenerator(TestsGeneratorConfig config)

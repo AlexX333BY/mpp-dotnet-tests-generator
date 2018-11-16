@@ -24,9 +24,7 @@ namespace TestsGenerator.UsageExample
                 WriteThreadCount = 2
             };
 
-            Task generationTask = new TestsGenerator(config).GetGenerateTask();
-            generationTask.Start();
-            generationTask.Wait();
+            new TestsGenerator(config).Generate().Wait();
             Console.WriteLine("Generation completed");
             Console.ReadKey();
         }
