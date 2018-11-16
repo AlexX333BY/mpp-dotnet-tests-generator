@@ -42,11 +42,11 @@ namespace TestsGenerator.UnitTests
         [TestMethod]
         public void UsingTests()
         {
-            Assert.IsTrue(class1Root.Usings.Any((usingEntry) => usingEntry.Name.ToString() == "Microsoft.VisualStudio.TestTools.UnitTesting"));
-            Assert.IsTrue(class1Root.Usings.Any((usingEntry) => usingEntry.Name.ToString() == "Moq"));
-            Assert.IsTrue(class1Root.Usings.Any((usingEntry) => usingEntry.Name.ToString() == "System"));
-            Assert.IsTrue(class1Root.Usings.Any((usingEntry) => usingEntry.Name.ToString() == "TestClassNamespace.Class1"));
-            Assert.IsTrue(class2Root.Usings.Any((usingEntry) => usingEntry.Name.ToString() == "TestClassNamespace.Class2"));
+            Assert.AreEqual(1, class1Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "Microsoft.VisualStudio.TestTools.UnitTesting").Count());
+            Assert.AreEqual(1, class1Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "Moq").Count());
+            Assert.AreEqual(1, class1Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "System").Count());
+            Assert.AreEqual(1, class1Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "TestClassNamespace.Class1").Count());
+            Assert.AreEqual(1, class2Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "TestClassNamespace.Class2").Count());
         }
 
         [TestMethod]
@@ -91,10 +91,10 @@ namespace TestsGenerator.UnitTests
             IEnumerable<MethodDeclarationSyntax> methods = class2Root.DescendantNodes().OfType<MethodDeclarationSyntax>();
 
             Assert.AreEqual(3, methods.Count());
-            Assert.IsTrue(methods.Any((method) => method.Identifier.ToString() == "TestInitialize"));
-            Assert.IsTrue(methods.Any((method) => method.Identifier.ToString() == "GetInterfaceTest"));
-            Assert.IsTrue(methods.Any((method) => method.Identifier.ToString() == "SetInterfaceTest"));
-            Assert.IsFalse(methods.Any((method) => method.Identifier.ToString() == "GetProtectedInterfaceTest"));
+            Assert.AreEqual(1, methods.Where((method) => method.Identifier.ToString() == "TestInitialize").Count());
+            Assert.AreEqual(1, methods.Where((method) => method.Identifier.ToString() == "GetInterfaceTest").Count());
+            Assert.AreEqual(1, methods.Where((method) => method.Identifier.ToString() == "SetInterfaceTest").Count());
+            Assert.AreEqual(0, methods.Where((method) => method.Identifier.ToString() == "GetProtectedInterfaceTest").Count());
         }
 
         [TestMethod]
@@ -113,55 +113,55 @@ namespace TestsGenerator.UnitTests
         [TestMethod]
         public void MockTest()
         {
-            Assert.IsTrue(class2Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
+            Assert.AreEqual(1, class2Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
                 .FirstOrDefault((method) => method.Identifier.ToString() == "TestInitialize").Body.Statements
                 .OfType<LocalDeclarationStatementSyntax>()
-                .Any((statement) => statement.ToFullString().Contains("new Mock")));
+                .Where((statement) => statement.ToFullString().Contains("new Mock")).Count());
         }
 
         [TestMethod]
         public void ClassInitTest()
         {
-            Assert.IsTrue(class2Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
+            Assert.AreEqual(1, class2Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
                 .FirstOrDefault((method) => method.Identifier.ToString() == "TestInitialize").Body.Statements
                 .OfType<ExpressionStatementSyntax>()
-                .Any((statement) => statement.ToFullString().Contains("new TestClass2")));
+                .Where((statement) => statement.ToFullString().Contains("new TestClass2")).Count());
         }
 
         [TestMethod]
         public void ActualTest()
         {
-            Assert.IsTrue(class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
+            Assert.AreEqual(1, class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
                 .FirstOrDefault((method) => method.Identifier.ToString() == "GetIntTest").Body.Statements
                 .OfType<LocalDeclarationStatementSyntax>()
-                .Any((statement) => statement.Declaration.Variables.Any((variable) => variable.Identifier.ToString() == "actual")));
+                .Where((statement) => statement.Declaration.Variables.Any((variable) => variable.Identifier.ToString() == "actual")).Count());
         }
 
         [TestMethod]
         public void ExpectedTest()
         {
-            Assert.IsTrue(class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
+            Assert.AreEqual(1, class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
                 .FirstOrDefault((method) => method.Identifier.ToString() == "GetIntTest").Body.Statements
                 .OfType<LocalDeclarationStatementSyntax>()
-                .Any((statement) => statement.Declaration.Variables.Any((variable) => variable.Identifier.ToString() == "expected")));
+                .Where((statement) => statement.Declaration.Variables.Any((variable) => variable.Identifier.ToString() == "expected")).Count());
         }
 
         [TestMethod]
         public void AreEqualTest()
         {
-            Assert.IsTrue(class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
+            Assert.AreEqual(1, class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
                 .FirstOrDefault((method) => method.Identifier.ToString() == "GetIntTest").Body.Statements
                 .OfType<ExpressionStatementSyntax>()
-                .Any((statement) => statement.ToString().Contains("Assert.AreEqual(expected, actual)")));
+                .Where((statement) => statement.ToString().Contains("Assert.AreEqual(expected, actual)")).Count());
         }
 
         [TestMethod]
         public void FailTest()
         {
-            Assert.IsTrue(class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
+            Assert.AreEqual(1, class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
                 .FirstOrDefault((method) => method.Identifier.ToString() == "GetIntTest").Body.Statements
                 .OfType<ExpressionStatementSyntax>()
-                .Any((statement) => statement.ToString().Contains("Assert.Fail")));
+                .Where((statement) => statement.ToString().Contains("Assert.Fail")).Count());
         }
 
         [TestMethod]
