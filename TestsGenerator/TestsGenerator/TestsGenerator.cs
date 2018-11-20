@@ -9,7 +9,7 @@ namespace TestsGenerator
     {
         protected readonly TestsGeneratorConfig config;
 
-        public Task Generate()
+        public async Task Generate()
         {
             DataflowLinkOptions linkOptions = new DataflowLinkOptions
             {
@@ -37,11 +37,11 @@ namespace TestsGenerator
 
             foreach (string readPath in config.ReadPaths)
             {
-                readTransform.SendAsync(readPath);
+                await readTransform.SendAsync(readPath);
             }
 
             readTransform.Complete();
-            return writeAction.Completion;
+            await writeAction.Completion;
         }
 
         public TestsGenerator(TestsGeneratorConfig config)
