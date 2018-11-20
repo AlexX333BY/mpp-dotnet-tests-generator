@@ -57,10 +57,15 @@ namespace TestsGenerator.UnitTests
         [TestMethod]
         public void UsingTests()
         {
-            Assert.AreEqual(1, class1Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "Microsoft.VisualStudio.TestTools.UnitTesting").Count());
-            Assert.AreEqual(1, class1Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "Moq").Count());
-            Assert.AreEqual(1, class1Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "System").Count());
-            Assert.AreEqual(1, class1Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "TestClassNamespace.Class1").Count());
+            List<string> expected = new List<string>
+            {
+                "Microsoft.VisualStudio.TestTools.UnitTesting",
+                "Moq",
+                "System",
+                "TestClassNamespace.Class1"
+            };
+            CollectionAssert.IsSubsetOf(expected, class1Root.Usings.Select(x => x.Name.ToString()).ToList());
+
             Assert.AreEqual(1, class2Root.Usings.Where((usingEntry) => usingEntry.Name.ToString() == "TestClassNamespace.Class2").Count());
         }
 
@@ -103,13 +108,16 @@ namespace TestsGenerator.UnitTests
         [TestMethod]
         public void MethodsTest()
         {
-            IEnumerable<MethodDeclarationSyntax> methods = class2Root.DescendantNodes().OfType<MethodDeclarationSyntax>();
+            List<string> expected = new List<string>
+            {
+                "TestInitialize",
+                "GetInterfaceTest",
+                "SetInterfaceTest"
+            };
+            List<string> actual = class2Root.DescendantNodes().OfType<MethodDeclarationSyntax>().Select((method) => method.Identifier.ToString()).ToList();
 
-            Assert.AreEqual(3, methods.Count());
-            Assert.AreEqual(1, methods.Where((method) => method.Identifier.ToString() == "TestInitialize").Count());
-            Assert.AreEqual(1, methods.Where((method) => method.Identifier.ToString() == "GetInterfaceTest").Count());
-            Assert.AreEqual(1, methods.Where((method) => method.Identifier.ToString() == "SetInterfaceTest").Count());
-            Assert.AreEqual(0, methods.Where((method) => method.Identifier.ToString() == "GetProtectedInterfaceTest").Count());
+            CollectionAssert.AreEquivalent(expected, class2Root.DescendantNodes().OfType<MethodDeclarationSyntax>().Select((method) => method.Identifier.ToString()).ToList());
+            Assert.IsFalse(actual.Contains("GetProtectedInterfaceTest"));
         }
 
         [TestMethod]
@@ -182,15 +190,18 @@ namespace TestsGenerator.UnitTests
         [TestMethod]
         public void ArgumentsInitializationTest()
         {
-            IEnumerable<LocalDeclarationStatementSyntax> declarations = class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
-                .FirstOrDefault((method) => method.Identifier.ToString() == "DoSomethingTest").Body.Statements
-                .OfType<LocalDeclarationStatementSyntax>();
+            List<string> expected = new List<string>()
+            {
+                "param1",
+                "param2"
+            };
 
-            Assert.AreEqual(2, declarations.Count());
-            Assert.AreEqual(1, declarations.Where((declaration) => declaration.Declaration.Variables
-                .Any((variable) => variable.Identifier.ToString() == "param1")).Count());
-            Assert.AreEqual(1, declarations.Where((declaration) => declaration.Declaration.Variables
-                .Any((variable) => variable.Identifier.ToString() == "param2")).Count());
+            List<string> actual = class1Root.DescendantNodes().OfType<MethodDeclarationSyntax>()
+                .FirstOrDefault((method) => method.Identifier.ToString() == "DoSomethingTest").Body.Statements
+                .OfType<LocalDeclarationStatementSyntax>().Select((declaration) => declaration.Declaration.Variables)
+                .SelectMany((declaration) => declaration.ToList()).Select((variableDeclaration) => variableDeclaration.Identifier.ToString()).ToList();
+
+            CollectionAssert.AreEquivalent(expected, actual);
         }
     }
 }
